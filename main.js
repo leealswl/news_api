@@ -31,7 +31,7 @@ let API_KEY=''
 
 let newsList=[]
 const getLatestNews = async() =>{
-    const url =new URL('https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&pageSize=1')
+    const url =new URL('https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&{PAGE_SIZE}')
     // url = new URL(
     //     `https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&pageSize=1`
     //   );
