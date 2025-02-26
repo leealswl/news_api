@@ -1,37 +1,174 @@
 .head-line {
-    margin-top: 1em;
-    display: flex;
-    justify-content: center;
+  margin-top: 1em;
+  display: flex;
+  justify-content: center;
 }
 
 .head-line svg{
-    width: 430px
+  width: 430px
+}
+
+.head-line i.fas.fa-search {
+  position: absolute;  /* 돋보기 아이콘을 절대 위치로 배치 */
+  top: 10px;           /* 상단으로 10px 간격 */
+  left: 10px;          /* 왼쪽으로 10px 간격 */
+  cursor: pointer;     /* 클릭 가능 표시 */
+  margin-right: 10px; /* 돋보기 아이콘과 input 사이 간격 */
+}
+
+.search-bar button {
+  width: 30%;           /* 버튼 너비 */
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background-color: gray;
+  color: white;
+  cursor: pointer;
+}
+
+.search-bar {
+  display: none;        /* 기본적으로 숨김 */
+  position: absolute;   /* 검색창을 헤드라인 내부에서 절대 위치로 배치 */
+  top: 50px;            /* 헤드라인 아래로 50px 떨어짐 */
+  left: 10px;           /* 왼쪽으로 10px 떨어짐 */
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  width: 200px;         /* 검색창 너비 */
+  display: flex;        /* input과 버튼을 나란히 배치 */
+  align-items: center;  /* 세로로 정렬 */
+}
+
+.search-bar input {
+  width: 50%;           /* 검색창 입력칸 너비 */
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
 }
 
 .menus {
-    margin-top: 1em;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    border-top : 1px solid #ebebeb;
-    border-bottom: 4px double #000;
+  margin-top: 1em;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  border-top : 1px solid #ebebeb;
+  border-bottom: 4px double #000;
 }
 
 .menus button {
-    border : none;
-    background:  none;
-    margin: 5px;
+  border : none;
+  background:  none;
+  margin: 5px;
 }
 
 .menus button:hover {
-    background-color: beige;
+  background-color: #575757;
 }
 
 .new-img-size{
-    max-width: 100%;
-    max-height: 250px;
+  max-width: 100%;
+  max-height: 250px;
 }
 
 .news {
-    border-bottom: 2px solid black;
+  border-bottom: 2px solid black;
 }
+
+ /* 모바일 햄버거 */
+@media screen and (max-width: 768px) {
+  .fa-bars {
+      display: block;
+      position: absolute;
+      left: 10px; /* 왼쪽에서 10px 떨어진 위치 */
+      top: 30px;  /* 필요하면 상단 여백 추가 */
+  }
+  .menus {
+      display: none;
+  }
+}
+ /* 데스크탑 메뉴  */
+@media screen and (min-width: 769px) {
+  .fa-bars {
+      display: none;
+  }
+  .menus {
+      display: flex;
+  }
+  .side-menu {
+    display: none !important; /* 사이드숨김 */
+}
+}
+
+.side-menu.active {
+  display: block; /* active 클래스 추가되면 보이게 */
+}
+
+.side-menu {
+  position: fixed;
+  top: 10vh;  /* 화면 위쪽에서 10vh 만큼 떨어짐 */
+  left: -250px; /* 기본적으로 화면 바깥에 숨김 */
+  width: 250px;
+  height: 70vh;
+  background: whitesmoke;
+  padding-top: 60px;
+  transition: left 0.3s ease-in-out; /* 부드러운 슬라이드 효과 */
+  border-radius: 0 20px 20px 0; /* 오른쪽 모서리 둥글게 */
+  display: flex;
+  flex-direction: column;
+}
+
+.side-menu.active {
+  left: 0; /* active 클래스 추가되면 화면 안으로 이동 */
+}
+
+/* 스크롤바 추가 */
+.side-menu-list {
+  flex: 1; /* 남은 공간을 모두 차지 */
+  max-height: calc(60vh - 40px); /* 높이를 사이드바 전체 크기로 제한 */
+  overflow-y: auto; /* 스크롤 활성화 */
+  padding: 10px;
+}
+
+.side-menu-list button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  color: black;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.side-menu-list button:hover {
+  background-color: #575757;
+}
+
+/* 스크롤바 스타일 (크롬, 엣지, 사파리) */
+.side-menu-list::-webkit-scrollbar {
+  width: 6px;
+}
+.side-menu-list::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+.side-menu-list::-webkit-scrollbar-track {
+  background: #ddd;
+  border-radius: 10px;
+}
+
+.closebtn {
+  position: absolute;
+  top: -10px; 
+  right: 10px; /* 사이드바 오른쪽 안쪽에 위치 */
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: black;
+  cursor: pointer;
+  padding: 10px;
+}
+
+
+
