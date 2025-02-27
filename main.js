@@ -41,7 +41,7 @@ getLatestNews()
 const render =()=> {
   const newsHTML =newsList.map((news) =>{ 
   let description = news.description || "내용없음";
-  let urlToImage = news.urlToImage || '/image/notlamge.png' ;
+  let urlToImage = news.urlToImage || 'https://via.placeholder.com/200x150.png?text=Image+Not+Available' ;
   let source = news.source ? news.source.name : "no source";
   let publishedAt = moment(news.publishedAt).fromNow();
 
