@@ -2,6 +2,8 @@
   margin-top: 1em;
   display: flex;
   justify-content: center;
+  position: relative; /* 자식 요소(검색창)를 절대 위치로 배치하기 위해 필요 */
+  align-items: center;
 }
 
 .head-line svg{
@@ -10,14 +12,15 @@
 
 .head-line i.fas.fa-search {
   position: absolute;  /* 돋보기 아이콘을 절대 위치로 배치 */
-  top: 10px;           /* 상단으로 10px 간격 */
+  top: 50px;            
   left: 10px;          /* 왼쪽으로 10px 간격 */
   cursor: pointer;     /* 클릭 가능 표시 */
   margin-right: 10px; /* 돋보기 아이콘과 input 사이 간격 */
+
 }
 
 .search-bar button {
-  width: 30%;           /* 버튼 너비 */
+  width: 20%;           /* 버튼 너비 */
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 3px;
@@ -25,18 +28,24 @@
   color: white;
   cursor: pointer;
 }
-
+.search-container {
+  width: 100%;
+  display: flex;
+  position: relative; /* search-bar를 절대 위치로 배치할 수 있게 설정 */
+}
 .search-bar {
-  display: none;        /* 기본적으로 숨김 */
-  position: absolute;   /* 검색창을 헤드라인 내부에서 절대 위치로 배치 */
-  top: 50px;            /* 헤드라인 아래로 50px 떨어짐 */
-  left: 10px;           /* 왼쪽으로 10px 떨어짐 */
+  position: absolute; /* 돋보기 아이콘 옆에 절대 위치 */
+  left: 20px;           /* 왼쪽으로 10px 떨어짐 */
   background-color: white;
   padding: 10px;
   border-radius: 5px;
-  width: 200px;         /* 검색창 너비 */
+  width: 400px;       
   display: flex;        /* input과 버튼을 나란히 배치 */
   align-items: center;  /* 세로로 정렬 */
+}
+
+.hidden {
+  display: none !important; /* 확실하게 숨김 */
 }
 
 .search-bar input {
@@ -72,6 +81,7 @@
 
 .news {
   border-bottom: 2px solid black;
+  padding: 1em 5px;
 }
 
  /* 모바일 햄버거 */

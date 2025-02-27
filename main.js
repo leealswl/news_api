@@ -15,23 +15,15 @@ function closeNav() {
 }
 
 function toggleSearch() {
-  var searchBar = document.getElementById('searchBar');  
-  var searchInput = document.getElementById('searchInput');
-  
-  if (searchBar.style.display === "block") {
-      searchBar.style.display = "none";  // 검색창이 보이면 숨김
-      searchInput.value = '';  // 입력값 초기화 (옵션)
-  } else {
-      searchBar.style.display = "block";  // 검색창이 숨겨져 있으면 보임
-      searchInput.focus();    // 검색창이 나타나면 자동으로 포커스 주기
-  }
+  const searchBar = document.getElementById("searchBar");
+  searchBar.classList.toggle("hidden");
 }
 
-let API_KEY=''
+let API_KEY='dfa5549770ab47b7921b3ae0763768df'
 
 let newsList=[]
 const getLatestNews = async() =>{
-    const url =new URL('https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&{PAGE_SIZE}')
+    const url =new URL(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`)
     // url = new URL(
     //     `https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&pageSize=1`
     //   );
@@ -47,18 +39,27 @@ getLatestNews()
 
 // UI
 const render =()=> {
-  const newsHTML =newsList.map(
-    (news) => `<div class="row news" >
+  const newsHTML =newsList.map((news) =>{ 
+  let description = news.description || "내용없음";
+  let urlToImage = news.urlToImage || '/image/notlamge.png' ;
+  let source = news.source ? news.source.name : "no source";
+  let publishedAt = moment(news.publishedAt).fromNow();
+
+  if (description.length >200){
+    description = description.substring(0,200) + "..." //substring 문자열 자를때 사용
+  }
+  
+    return `<div class="row news" >
   <div class="col-lg-4">
-      <img class="new-img-size" src=${news.urlToImage} />
+      <img class="new-img-size" src="${urlToImage}" />
   </div>    
   <div class="col-lg-8">
       <h2>${news.title}</h2>
-      <p>${news.description}</p>
-      <div>${news.source.name}* ${news.publishedAt}</div>
+      <p>${description}</p>
+      <div>${source} * ${publishedAt}</div>
   </div>
 </div>`
-)
+})
 .join("");
   
   
