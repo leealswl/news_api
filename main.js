@@ -19,20 +19,19 @@ function toggleSearch() {
   searchBar.classList.toggle("hidden");
 }
 
-// let API_KEY='dfa5549770ab47b7921b3ae0763768df'
+let API_KEY='dfa5549770ab47b7921b3ae0763768df'
 
 let newsList=[]
 const getLatestNews = async() =>{
-    const url =new URL(`https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&pageSize=${PAGE_SIZE}`)
-    // url = new URL(https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}
-    //     `https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&pageSize=1`
-    //   );
+    const url =new URL(`https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&pageSize=20`)
+    // url = new URL(https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}}
+    // https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&pageSize=${PAGE_SIZE}  );
     const response = await fetch(url)
     const data=await response.json()
     
     newsList=data.articles
     render() //뉴스리스트가 확정된다음에 렌더함수를 써줘야 내용이 나옴
-    console.log("Ddd",newsList)
+    console.log("뉴스리스트",newsList)
     
 };
 getLatestNews()
@@ -41,7 +40,7 @@ getLatestNews()
 const render =()=> {
   const newsHTML =newsList.map((news) =>{ 
   let description = news.description || "내용없음";
-  let urlToImage = news.urlToImage || 'https://via.placeholder.com/200x150.png?text=Image+Not+Available';
+  let urlToImage = news.urlToImage || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqEWgS0uxxEYJ0PsOb2OgwyWvC0Gjp8NUdPw&usqp=CAU';
   let source = news.source ? news.source.name : "no source";
   let publishedAt = moment(news.publishedAt).fromNow();
 
