@@ -51,7 +51,7 @@ const render =()=> {
   
     return `<div class="row news" >
   <div class="col-lg-4">
-      <img class="new-img-size" src="${urlToImage}" />
+      <img class="new-img-size" src=${urlToImage} />
   </div>    
   <div class="col-lg-8">
       <h2>${news.title}</h2>
