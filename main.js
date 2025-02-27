@@ -12,20 +12,19 @@ function openNav() {
 
 function closeNav() {
   document.getElementById("mySidenav").classList.remove("active");
+  console.log("닫히?",closeNav)
 }
 
 function toggleSearch() {
   const searchBar = document.getElementById("searchBar");
   searchBar.classList.toggle("hidden");
 }
-
 let API_KEY='dfa5549770ab47b7921b3ae0763768df'
-
 let newsList=[]
 const getLatestNews = async() =>{
     const url =new URL(`https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&pageSize=20`)
     // url = new URL(https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}}
-    // https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&pageSize=${PAGE_SIZE}  );
+    // https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&pageSize=20  );
     const response = await fetch(url)
     const data=await response.json()
     
@@ -50,7 +49,8 @@ const render =()=> {
   
     return `<div class="row news" >
   <div class="col-lg-4">
-      <img class="new-img-size" src="${urlToImage}" />
+      <img class="new-img-size" src="${urlToImage}" onerror="this.onerror=null;this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqEWgS0uxxEYJ0PsOb2OgwyWvC0Gjp8NUdPw&usqp=CAU';"
+      />
   </div>    
   <div class="col-lg-8">
       <h2>${news.title}</h2>
@@ -63,4 +63,41 @@ const render =()=> {
   
   
   document.getElementById('news-board').innerHTML=newsHTML
+}
+
+//버튼에 클릭이벤트 만들기 -> 카테고리별 뉴스 가져오기 -> 그 뉴스를 보여주기(render)
+const menus = document.querySelectorAll(".menus button")
+
+menus.forEach(menu=>menu.addEventListener("click",(event)=>getNewsByCategory(event)))
+
+const getNewsByCategory = async (event) => {
+  const category = event.target.textContent.toLowerCase();
+  console.log("카테고리",category)
+  const url =new URL(
+    `https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&category=${category}&pageSize=20`
+    );
+    const response = await fetch(url);
+    const data=await response.json();
+    console.log("data",data);
+    newsList = data.articles;
+    render()
+    
+};
+
+//키워드로 검색하기 혼자생각해보기 버튼클릭이벤트 -> 키워드별 뉴스 가져오기 -> 보여주기
+
+const searchKeyword =async()=> {
+  const keyword = document.getElementById("searchInput").value;
+  console.log("키워드",keyword)
+  const url =new URL(
+    `https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&q=${keyword}&pageSize=20`
+    );
+    const response = await fetch(url);
+    const data=await response.json();
+    console.log("keyword-data",data);
+    newsList = data.articles;
+    render()
+
+    // 입력 필드 비우기
+  document.querySelector("input").value = "";
 }

@@ -170,7 +170,7 @@
 
 .closebtn {
   position: absolute;
-  top: -10px; 
+  top: -5px; 
   right: 10px; /* 사이드바 오른쪽 안쪽에 위치 */
   background: none;
   border: none;
@@ -180,5 +180,9 @@
   padding: 10px;
 }
 
-
+.new-img-size {
+  width: 400px;  /* 가로 크기 */
+  height: 250px; /* 세로 크기 */
+  object-fit: cover; /* 비율을 유지하면서 꽉 차게 */
+}
 
