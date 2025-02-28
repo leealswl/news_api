@@ -16,11 +16,10 @@
   left: 10px;          /* 왼쪽으로 10px 간격 */
   cursor: pointer;     /* 클릭 가능 표시 */
   margin-right: 10px; /* 돋보기 아이콘과 input 사이 간격 */
-
 }
 
 .search-bar button {
-  width: 20%;           /* 버튼 너비 */
+  width: 20%;          
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 3px;
@@ -34,22 +33,22 @@
   position: relative; /* search-bar를 절대 위치로 배치할 수 있게 설정 */
 }
 .search-bar {
-  position: absolute; /* 돋보기 아이콘 옆에 절대 위치 */
-  left: 20px;           /* 왼쪽으로 10px 떨어짐 */
+  position: absolute; 
+  left: 20px;           
   background-color: white;
   padding: 10px;
   border-radius: 5px;
   width: 400px;       
-  display: flex;        /* input과 버튼을 나란히 배치 */
-  align-items: center;  /* 세로로 정렬 */
+  display: flex;       
+  align-items: center; 
 }
 
 .hidden {
-  display: none !important; /* 확실하게 숨김 */
+  display: none !important; 
 }
 
 .search-bar input {
-  width: 50%;           /* 검색창 입력칸 너비 */
+  width: 50%;           
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 3px;
@@ -89,8 +88,8 @@
   .fa-bars {
       display: block;
       position: absolute;
-      left: 10px; /* 왼쪽에서 10px 떨어진 위치 */
-      top: 30px;  /* 필요하면 상단 여백 추가 */
+      left: 10px;
+      top: 30px;  
   }
   .menus {
       display: none;
@@ -105,36 +104,36 @@
       display: flex;
   }
   .side-menu {
-    display: none !important; /* 사이드숨김 */
+    display: none !important;
 }
 }
 
 .side-menu.active {
-  display: block; /* active 클래스 추가되면 보이게 */
+  display: block; 
 }
 
 .side-menu {
   position: fixed;
-  top: 10vh;  /* 화면 위쪽에서 10vh 만큼 떨어짐 */
-  left: -250px; /* 기본적으로 화면 바깥에 숨김 */
+  top: 15vh;
+  left: -250px;
   width: 250px;
   height: 70vh;
   background: whitesmoke;
   padding-top: 60px;
-  transition: left 0.3s ease-in-out; /* 부드러운 슬라이드 효과 */
-  border-radius: 0 20px 20px 0; /* 오른쪽 모서리 둥글게 */
+  transition: left 0.3s ease-in-out; 
+  border-radius: 0 20px 20px 0; 
   display: flex;
   flex-direction: column;
 }
 
 .side-menu.active {
-  left: 0; /* active 클래스 추가되면 화면 안으로 이동 */
+  left: 0;
 }
 
 /* 스크롤바 추가 */
 .side-menu-list {
-  flex: 1; /* 남은 공간을 모두 차지 */
-  max-height: calc(60vh - 40px); /* 높이를 사이드바 전체 크기로 제한 */
+  flex: 1; 
+  max-height: calc(60vh - 40px); 
   overflow-y: auto; /* 스크롤 활성화 */
   padding: 10px;
 }
@@ -170,8 +169,8 @@
 
 .closebtn {
   position: absolute;
-  top: -5px; 
-  right: 10px; /* 사이드바 오른쪽 안쪽에 위치 */
+  top: -1px; 
+  right: 10px;
   background: none;
   border: none;
   font-size: 24px;
@@ -181,8 +180,8 @@
 }
 
 .new-img-size {
-  width: 400px;  /* 가로 크기 */
-  height: 250px; /* 세로 크기 */
-  object-fit: cover; /* 비율을 유지하면서 꽉 차게 */
+  width: 400px;  
+  height: 250px; 
+  object-fit: cover; 
 }
 

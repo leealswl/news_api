@@ -1,1 +1,23 @@
 .env
+
+// API호출하고 싶을 때
+// const callAPI = async() =>{
+//     let url = new URL(`url주소`)
+//     let header = new Headers({헤더내용}) // 이건 필요한 경우만
+//     let response = await fetch(url,{headers:header})
+//     let data = await response.json()
+// }
+
+
+<!-- 이번 프로젝트: https://noona-times-v2.netlify.app/
+
+<!-- 주요기능
+유저는 최신 뉴스를 볼 수 있다.
+뉴스에는 사진, 제목, 내용, 출처,날짜가 있다.
+뉴스를 sport, tech, business등 카테고리별로 볼 수 있다.
+뉴스를 검색할 수 있다.
+웹사이트는 반응형 웹페이지다.
+pagenation으로 다음 뉴스정보를 받아볼 수 있다. -->
+
+<!-- api키 -->
+<!-- dfa5549770ab47b7921b3ae0763768df -->
