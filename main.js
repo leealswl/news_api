@@ -9,34 +9,47 @@ function toggleSearch() {
   searchBar.classList.toggle("hidden");
 }
 
+
+let totalResults = 0;
+let page=1;
+const pageSize=10;
+const groupSize=5;
+
+let newsList=[]
+let url=new URL(
+  `https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&pageSize=${pageSize}`
+  );
+
 const getNews =async()=> {
   try {
+    url.searchParams.set("page",page) //&page=page
+    url.searchParams.set("pagesize",pageSize)
+
     const response = await fetch(url);
-    
     const data=await response.json();
+
     if(response.status===200){
       if(data.articles.length ===0){
         throw new Error("NO RESULT FOR THIS SEARCH");
       }
       newsList = data.articles;
+      totalResults=data.totalResults
       render();
+      paginationRender();
     }else {
-      throw new Error(data.message)
+      throw new Error(data.message);
     }
-    
   }catch(error){
-    errorRender(error.message)
+    errorRender(error.message);
   }
 };
 
-let newsList=[]
-let url=new URL(`https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&pageSize=20`)
 
 const getLatestNews = async() =>{
-    url =new URL(`https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&pageSize=20`)
+    url =new URL(`https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr`)
     getNews()  ;
   };
-  getLatestNews()
+ 
 
 // UI
 const render =()=> {
@@ -82,7 +95,7 @@ sideMenus.forEach(sideMenu=>sideMenu.addEventListener("click",(event)=>getNewsBy
 const getNewsByCategory = async (event) => {
   const category = event.target.textContent.toLowerCase();
   url =new URL(
-    `https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&category=${category}&pageSize=20`
+    `https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&category=${category}`
     );
     getNews();
 };
@@ -91,9 +104,60 @@ const getNewsByCategory = async (event) => {
 const searchKeyword =async()=> {
   const keyword = document.getElementById("searchInput").value;
   url =new URL(
-    `https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&q=${keyword}&pageSize=20`
+    `https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&q=${keyword}`
     );
-    getNews();
   document.querySelector("input").value = "";     // 입력 필드 비우기
+  getNews();
 }
 
+
+const paginationRender=()=> {
+  //totalResult, page, pageSize, pageGroup, firstPage
+  const totalPages=Math.ceil(totalResults/pageSize);
+  const pageGroup =Math.ceil(page/groupSize);
+  let lastPage= pageGroup * groupSize; //마지막 페이지 그룹이 그룹사이즈보다 작으면 lastpage = totalpage
+    
+  if (lastPage>totalPages){
+      lastPage=totalPages
+    }
+  const firstPage = lastPage-(groupSize -1 )<=0? 1: lastPage-(groupSize -1);
+ 
+  let paginationHTML = `
+  <li class="page-item ${page === 1 ? "disabled" : ""}">
+    <a class="page-link" href="#" onclick="moveToPage(1)">&laquo;</a> 
+  </li>
+  <li class="page-item ${page === 1 ? "disabled" : ""}">
+    <a class="page-link" href="#" onclick="moveToPage(${page - 1})">&lt;</a>
+  </li>
+`;
+
+  for (let i=firstPage; i<=lastPage; i++) {
+    paginationHTML += `
+      <li class="page-item ${i === page ? "active" : ""}" data-page="${i}">
+        <a class="page-link" href="#" onclick="moveToPage(${i})">${i}</a>
+      </li>
+    `;
+  }
+  paginationHTML += `
+  <li class="page-item ${page === totalPages ? "disabled" : ""}">
+    <a class="page-link" href="#" onclick="moveToPage(${page + 1})">&gt;</a>
+  </li>
+  <li class="page-item ${page === totalPages ? "disabled" : ""}">
+    <a class="page-link" href="#" onclick="moveToPage(${totalPages})">&raquo;</a> 
+  </li>
+`;
+  document.querySelector(".pagination").innerHTML=paginationHTML
+  const activePageItem = document.querySelector(`.page-item[data-page="${page}"]`);
+  if (activePageItem) {
+    activePageItem.classList.add("active");
+  }
+};
+
+
+
+const moveToPage=(pageNum)=> {
+page=pageNum;
+getNews()
+};
+
+getLatestNews();

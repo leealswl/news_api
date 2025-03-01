@@ -185,3 +185,27 @@
   object-fit: cover; 
 }
 
+.pagination {
+  display: flex;
+  justify-content: center; /* 가운데 정렬 */
+  flex-wrap: wrap; /* 너무 길면 자동 줄바꿈 */
+  gap: 5px; /* 버튼 간격 */
+  padding: 10px 0;
+}
+
+.pagination .page-link:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+/* 모바일 최적화 */
+@media (max-width: 600px) {
+  .pagination {
+    gap: 3px;
+  }
+
+  .pagination .page-link {
+    padding: 6px 10px;
+    font-size: 14px;
+  }
+}
