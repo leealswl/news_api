@@ -111,47 +111,113 @@ const searchKeyword =async()=> {
 }
 
 
-const paginationRender=()=> {
-  //totalResult, page, pageSize, pageGroup, firstPage
-  const totalPages=Math.ceil(totalResults/pageSize);
-  const pageGroup =Math.ceil(page/groupSize);
-  let lastPage= pageGroup * groupSize; //마지막 페이지 그룹이 그룹사이즈보다 작으면 lastpage = totalpage
+// const paginationRender=()=> {
+//   //totalResult, page, pageSize, pageGroup, firstPage
+//   const totalPages=Math.ceil(totalResults/pageSize);
+//   const pageGroup =Math.ceil(page/groupSize);
+//   let lastPage= pageGroup * groupSize; //마지막 페이지 그룹이 그룹사이즈보다 작으면 lastpage = totalpage
     
-  if (lastPage>totalPages){
-      lastPage=totalPages
-    }
-  const firstPage = lastPage-(groupSize -1 )<=0? 1: lastPage-(groupSize -1);
+//   if (lastPage>totalPages){
+//       lastPage=totalPages
+//     }
+//   const firstPage = lastPage-(groupSize -1 )<=0? 1: lastPage-(groupSize -1);
  
-  let paginationHTML = `
-  <li class="page-item ${page === 1 ? "disabled" : ""}">
-    <a class="page-link" href="#" onclick="moveToPage(1)">&laquo;</a> 
-  </li>
-  <li class="page-item ${page === 1 ? "disabled" : ""}">
-    <a class="page-link" href="#" onclick="moveToPage(${page - 1})">&lt;</a>
-  </li>
-`;
+//   let paginationHTML = `
+//   <li class="page-item ${page === 1 ? "disabled" : ""}">
+//     <a class="page-link" href="#" onclick="moveToPage(1)">&laquo;</a> 
+//   </li>
+//   <li class="page-item ${page === 1 ? "disabled" : ""}">
+//     <a class="page-link" href="#" onclick="moveToPage(${page - 1})">&lt;</a>
+//   </li>
+// `;
 
-  for (let i=firstPage; i<=lastPage; i++) {
+//   for (let i=firstPage; i<=lastPage; i++) {
+//     paginationHTML += `
+//       <li class="page-item ${i === page ? "active" : ""}" data-page="${i}">
+//         <a class="page-link" href="#" onclick="moveToPage(${i})">${i}</a>
+//       </li>
+//     `;
+//   }
+//   paginationHTML += `
+//   <li class="page-item ${page === totalPages ? "disabled" : ""}">
+//     <a class="page-link" href="#" onclick="moveToPage(${page + 1})">&gt;</a>
+//   </li>
+//   <li class="page-item ${page === totalPages ? "disabled" : ""}">
+//     <a class="page-link" href="#" onclick="moveToPage(${totalPages})">&raquo;</a> 
+//   </li>
+// `;
+//   document.querySelector(".pagination").innerHTML=paginationHTML
+//   const activePageItem = document.querySelector(`.page-item[data-page="${page}"]`);
+//   if (activePageItem) {
+//     activePageItem.classList.add("active");
+//   }
+// };
+
+const paginationRender = () => {
+  const totalPages = Math.ceil(totalResults / pageSize);
+  const pageGroup = Math.ceil(page / groupSize);
+
+  let lastPage = pageGroup * groupSize;
+  if (lastPage > totalPages) {
+    lastPage = totalPages;
+  }
+  let firstPage = lastPage - (groupSize - 1) <= 0 ? 1 : lastPage - (groupSize - 1);
+
+  //  전체 페이지가 5 이하일 경우 -> 첫 3개 페이지만 보이도록 고정
+  if (totalPages <= 5) {
+    firstPage = 1;
+    lastPage = Math.min(3, totalPages); // 최대 3개만 보이게 조정
+  }
+
+  //  마지막 페이지 그룹이 5개로 딱 안 떨어질 경우 -> 남은 페이지만큼 보이게 조정
+  const remainingPages = totalPages % groupSize;
+  if (remainingPages > 0 && lastPage === totalPages) {
+    firstPage = totalPages - remainingPages + 1;
+  }
+
+  let paginationHTML = "";
+
+  //  첫 번째 페이지 그룹이 아닐 때만 '처음' 및 '이전' 버튼 표시
+  if (firstPage > 1) {
+    paginationHTML += `
+      <li class="page-item">
+        <a class="page-link" href="#" onclick="moveToPage(1)">&laquo;</a> 
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="#" onclick="moveToPage(${page - 1})">&lt;</a>
+      </li>
+    `;
+  }
+
+  for (let i = firstPage; i <= lastPage; i++) {
     paginationHTML += `
       <li class="page-item ${i === page ? "active" : ""}" data-page="${i}">
         <a class="page-link" href="#" onclick="moveToPage(${i})">${i}</a>
       </li>
     `;
   }
-  paginationHTML += `
-  <li class="page-item ${page === totalPages ? "disabled" : ""}">
-    <a class="page-link" href="#" onclick="moveToPage(${page + 1})">&gt;</a>
-  </li>
-  <li class="page-item ${page === totalPages ? "disabled" : ""}">
-    <a class="page-link" href="#" onclick="moveToPage(${totalPages})">&raquo;</a> 
-  </li>
-`;
-  document.querySelector(".pagination").innerHTML=paginationHTML
+
+  //  마지막 페이지 그룹이 아닐 때만 '다음' 및 '끝' 버튼 표시
+  if (lastPage < totalPages) {
+    paginationHTML += `
+      <li class="page-item">
+        <a class="page-link" href="#" onclick="moveToPage(${page + 1})">&gt;</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="#" onclick="moveToPage(${totalPages})">&raquo;</a> 
+      </li>
+    `;
+  }
+
+  document.querySelector(".pagination").innerHTML = paginationHTML;
+  
   const activePageItem = document.querySelector(`.page-item[data-page="${page}"]`);
   if (activePageItem) {
     activePageItem.classList.add("active");
   }
 };
+
+
 
 
 
